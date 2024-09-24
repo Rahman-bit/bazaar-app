@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -16,6 +16,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { NoDataFound } from '../../../pages/NoDataFound';
 import { dateDifference, dateFormat } from '../../../Utilities/Utils';
+import GlobalSearch from '../../globalSearch/globalSearchCom';
+import InputField from '../../globalSearch/inputField';
 
 const ManageLead = () => {
 
@@ -90,7 +92,7 @@ const ManageLead = () => {
     currentSelectedFilter = localStorage.getItem("page");
   }
   useEffect(() => {
-    console.log("currentSelectedFilter", currentSelectedFilter)
+    // console.log("currentSelectedFilter", currentSelectedFilter)
     handleStatusClick(currentSelectedFilter);
   }, [currentSelectedFilter, leadData])
 
@@ -105,7 +107,7 @@ const ManageLead = () => {
 
   const handleCloseButton = () => {
     setActiveSideViewOfLead(false)
-    console.log("activeFullViewOfLead", activeFullViewOfLead)
+    // console.log("activeFullViewOfLead", activeFullViewOfLead)
     // setActiveFullViewOfLead(!activeFullViewOfLead)
     // activeFullViewOfLead ? setActiveSideViewOfLead(false) : setActiveSideViewOfLead(true)
   }
@@ -138,7 +140,7 @@ const ManageLead = () => {
 
 
 const handleLeadsMoreList = (listItem: any, id: any) => {
-  console.log("listItem", listItem, id);
+  // console.log("listItem", listItem, id);
   if(listItem?.navTitle === "Change Lead Status" || listItem?.navTitle === "Remove Lead" ) {
     handleLeadStatusChangeShow(listItem, id)
   } 
@@ -149,6 +151,24 @@ const handleLeadsMoreList = (listItem: any, id: any) => {
     navigate(`${invoice}/${id}`);
   }
 }
+
+const filterByName = useCallback((apiData: any[], input: string) => {
+  // if (!input) {
+  //   console.log("No input provided");
+  //   setLeadDataRow(apiData); 
+  // }
+  // const filteredData = apiData.filter((user) => {
+  //   if (user.customerName) {
+  //     return user.customerName.toLowerCase().includes(input.toLowerCase());
+  //   }
+  //   return false; 
+  // });
+  setLeadDataRow(apiData)
+  console.log("Filtered Data:", apiData);
+  return apiData;
+}, [leadDataRow])
+
+
   return (
     <>
     {/* <ManageLeadSideNavMore show={manageLeadSideNavMoreModalShow} onHide={() => {
@@ -159,6 +179,7 @@ const handleLeadsMoreList = (listItem: any, id: any) => {
     <Container fluid className={`${styles.managelead_wrapper} manage_top_view`}>
       <Container>
         <Row className='align-items-center justify-content-between'>
+          
           {/* <Col xs lg="2"><h6>Manage Leads</h6></Col> */}
           <Col xs lg="9">
             <ul>
@@ -186,11 +207,20 @@ const handleLeadsMoreList = (listItem: any, id: any) => {
         <Row className="align-items-center">
           <Col><label>{activeStatus} Leads</label></Col>
           <Col xs lg="3">
-          <Form className={styles.searchForm}>
-            <Form.Group controlId="exampleForm.ControlInput1">
-              <Form.Control type="email" placeholder="Search..." /><FontAwesomeIcon icon={faMagnifyingGlass} />
-            </Form.Group>
-           </Form>
+            <Form className={styles.searchForm}>
+              <Form.Group controlId="exampleForm.ControlInput1">
+                {/* <Form.Control type="email" placeholder="Search..." /><FontAwesomeIcon icon={faMagnifyingGlass} /> */}
+              
+              <GlobalSearch
+                type='email'
+                apiUrl="http://localhost:8000/createlead"
+                filterFunction={filterByName}
+                searchCategory = 'customerName'
+                placeholder="Search users by name..."
+              /><FontAwesomeIcon icon={faMagnifyingGlass} />
+
+              </Form.Group>
+            </Form>
         </Col>
         </Row>
       </Container>

@@ -7,13 +7,14 @@ import DeleteSelectedItem from './deleteSelectedItem'
 import { useNavigate } from 'react-router-dom'
 import { PDFDownloadLink, Document } from '@react-pdf/renderer'
 import DownloadBill from '../components/billing/download-bill'
+import DynamicPagination from '../components/pagenation'
 const ViewInvoice = ({ data, isDelete } : any) => {
 
     const [selectedJourney] = useState("invoice");
     const [selectedId, setSelectedId] = useState("" as any)
     const [changeModalshow, setChangeModalShow] = useState(false);
     const navigate = useNavigate();
-    
+    console.log("Dtata:======", data)
     const handleDelteInvoice = (id: any) => {
         console.log("id", id);
         setSelectedId(id)
@@ -44,7 +45,9 @@ const ViewInvoice = ({ data, isDelete } : any) => {
     <DeleteSelectedItem closeModal = {setChangeModalShow} show = {changeModalshow} onHide = {handleChangeClose} journey = {selectedJourney} id = {selectedId} />
    
     <div className={`${styles.invoice_wrapper} container`}>
-        <table>
+        
+    <DynamicPagination tableData={data} category ='customer' isDelete={isDelete} />
+        {/* <table>
             <thead>
                 <tr>
                     <th># No</th>
@@ -62,25 +65,25 @@ const ViewInvoice = ({ data, isDelete } : any) => {
                         <td>{item?.createdDate}</td>
                         <td>{item?.customerName}</td>
                         <td>{item?.currencyType}</td>
-                        <td>{item?.invoieStatus}</td>
+                        <td>{item?.invoieStatus}</td> */}
                          
-                        <td>
+                        {/* <td>
                             <FontAwesomeIcon icon={faPenToSquare}  className='edit_icon' onClick={() => handleUpdateInvoice(item?.id)}/>
                             {/* <FontAwesomeIcon icon={faDownload} className='download_icon' onClick={() => handleDownloadInvoice(item?.id)}/> */}
-                            <PDFDownloadLink document={<MyDoc pdfdata = {item} />} fileName={item?.customerName}>
+                            {/* <PDFDownloadLink document={<MyDoc pdfdata = {item} />} fileName={item?.customerName}>
                             {({ loading }) =>
                                 loading ? 'Loading...' : <FontAwesomeIcon icon={faDownload} />
                             }
                             </PDFDownloadLink>
                             <FontAwesomeIcon icon={faXmark}  className='delete_icon' onClick={() => handleDelteInvoice(item?.id)}/>
-                        </td>
-                    </tr>)
+                        </td>  */}
+                    {/* </tr>)
                 }
             </tbody>
-        </table>
-        { 
+        </table> */}
+        {/* { 
             !data?.length && <NoDataFound /> 
-          }
+          } */}
     </div>
     </>
   )

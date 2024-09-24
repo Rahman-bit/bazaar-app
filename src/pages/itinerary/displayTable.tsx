@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCopy, faEye, faDownload, faXmark, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import { PDFDownloadLink, Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 import Daywiseplan from './dayWisePlan';
+import DynamicPagination from '../../components/pagenation';
 
 const DisplayTable = (props: any) => {
 
@@ -21,11 +22,13 @@ const DisplayTable = (props: any) => {
             <Daywiseplan createItinerary = {pdfdata}/>
         </Document>
     );
-    
+    console.log("props.rowData:", props.rowData)
   return (
     <div className="display_table_main_wrapper container">
         <Table striped bordered hover>
-        <thead>
+        {/* <DynamicPagination  /> */}
+        <DynamicPagination tableData={props.rowData} category ='itinerary' />
+        {/* <thead>
             <tr>
                 <th># ID</th>
                 <th>Created Date</th>
@@ -59,7 +62,9 @@ const DisplayTable = (props: any) => {
                     </td>
                  </tr>)
             }
-        </tbody>
+        
+        </tbody> */}
+        
         </Table>
     </div>
   )
