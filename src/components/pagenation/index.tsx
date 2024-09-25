@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import DeleteSelectedItem from '../../Utilities/deleteSelectedItem';
 import ViewMyCustomer from '../../Utilities/ViewMyCustomer';
 import CreateNewCustomer from '../../Utilities/CreateNewCustomer';
+import DownloadBill from '../billing/download-bill';
 
 interface CustomerData {
   customerName: string;
@@ -30,10 +31,11 @@ const DynamicPagination: React.FC<DynamicPaginationProps> = ({ tableData, catego
     // Myitinerary
   const [data, setData] = useState<CustomerData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const recordsPerPage = 2;
+// const [totalRecords, setTotalRecords] = useState<number>(0);
+  const recordsPerPage = 3;
   const navigate = useNavigate();   
 
-    // Inovice 
+  // Inovice 
   const [selectedJourney] = useState("invoice");
   const [selectedId, setSelectedId] = useState("" as any)
   const [changeModalshow, setChangeModalShow] = useState(false);
@@ -53,6 +55,23 @@ const DynamicPagination: React.FC<DynamicPaginationProps> = ({ tableData, catego
       setData(currentRecords);
     }
   }, [currentPage, tableData]);
+
+  // Fetch data from API based on the current page
+//   const fetchData = async (pageNumber:any) => {
+//     const response = await fetch(`https://jsonplaceholder.typicode.com/posts?_page=${pageNumber}&_limit=${recordsPerPage}`);
+//     const apiData = await response.json();
+//     const total = response.headers.get('x-total-count');  
+//     setTotalRecords(total ? parseInt(total, 10) : 0);;
+//     setData(apiData);
+//     console.log("Api Data : ", apiData)
+//   };
+
+//   // Fetch the data whenever currentPage changes
+//   useEffect(() => {
+//     fetchData(currentPage);
+//   }, [currentPage]);
+
+//   const totalPages = Math.ceil(totalRecords / recordsPerPage);
 
   const totalPages = Math.ceil(tableData.length / recordsPerPage);
 
@@ -109,9 +128,12 @@ const DynamicPagination: React.FC<DynamicPaginationProps> = ({ tableData, catego
   };
 
   const MyDoc = (pdfdata: any) => (
-    <Document>
-      <Daywiseplan createItinerary={pdfdata} />
-    </Document>
+        <>
+            <Document>
+            <Daywiseplan createItinerary={pdfdata} />
+            </Document>
+            <DownloadBill billData = {pdfdata}/>
+        </>
   );
 
   const handleUpdateInvoice = (id:any) => {
