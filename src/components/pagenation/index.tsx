@@ -27,15 +27,18 @@ interface DynamicPaginationProps {
 }
 
 const DynamicPagination: React.FC<DynamicPaginationProps> = ({ tableData, category, isDelete }) => {
+    // Myitinerary
   const [data, setData] = useState<CustomerData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const recordsPerPage = 2;
-  const navigate = useNavigate();
+  const navigate = useNavigate();   
 
+    // Inovice 
   const [selectedJourney] = useState("invoice");
   const [selectedId, setSelectedId] = useState("" as any)
   const [changeModalshow, setChangeModalShow] = useState(false);
 
+  // Inovice customer
   const [selectedCustomerJourney, setselectedCustomerJourney] = useState<string>("");
   const [selectedCustomerId, setselectedCustomerId] = useState<string>("");
   const [viewCustomer, setViewCustomer] = useState(false)
@@ -240,7 +243,7 @@ const handleDeleteCustomer = (journey: any, id: any) => {
     }else if(category === 'customer'){
         return (<>
             <ViewMyCustomer show = {viewCustomer} onHide = {handleViewClose} data = {viewCustomerData} />
-            <DeleteSelectedItem closeModal = {setChangeModalShow} show = {changeModalshow} onHide = {handleChangeClose} journey = {selectedJourney} id = {selectedId} />
+            <DeleteSelectedItem closeModal = {setChangeModalShow} show = {changeModalshow} onHide = {handleChangeClose} journey = {selectedCustomerJourney} id = {selectedCustomerId} />
             <CreateNewCustomer closeModal = {setCreateNewCustomerModalShow} show = {createNewCustomerModalShow} onHide={() => setCreateNewCustomerModalShow(false)} />
             <Table striped bordered hover>
               <thead>
