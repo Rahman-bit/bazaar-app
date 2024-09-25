@@ -329,8 +329,8 @@
     {
       "id": "HB3235",
       "createdDate": "8/27/2024, 11:43:32 PM",
-      "customerFirstName": "Roshan ",
-      "customerLastName": "Syed 1",
+      "customerFirstName": "Rahamn",
+      "customerLastName": "Syed",
       "customerEmail": "roshan@gmail.com",
       "customerMobile": "898989898",
       "country": "India",
@@ -361,6 +361,18 @@
       "state": "Karnataka",
       "city": "Bangalore",
       "zipcode": "560037"
+    },
+    {
+      "id": "HB2486",
+      "createdDate": "9/25/2024, 10:36:42 AM",
+      "customerFirstName": "abdul ",
+      "customerLastName": "Rahman",
+      "customerEmail": "rahaman77k@gmail.com",
+      "customerMobile": "9885266537",
+      "country": "India",
+      "state": "Andhra Pradesh",
+      "city": "TALAMUDIPI",
+      "zipcode": "518508"
     }
   ],
   "updatecustomer": [],
@@ -486,20 +498,6 @@
       "invoiceType": ""
     },
     {
-      "id": "HB9915",
-      "currencyType": "USD",
-      "paymentMode": "Payment Gateway",
-      "customerName": "Hemanth Danala BB",
-      "invoieStatus": "Canceled",
-      "invoiceParticulars": [],
-      "grandTotalAmount": "",
-      "gstNummber": "36AAPCS5625R1ZE",
-      "panNummber": "BLUPA2358A",
-      "billingNote": "test",
-      "createdDate": "9/15/2024, 10:43:19 PM",
-      "invoiceType": ""
-    },
-    {
       "id": "8938",
       "currencyType": "INR",
       "paymentMode": "RTGS / NEFT / IMPS",
@@ -537,30 +535,6 @@
       "billingNote": "Billing note",
       "invoiceId": "HB3058",
       "createdDate": "9/20/2024, 8:01:52 PM",
-      "invoiceType": ""
-    },
-    {
-      "id": "HB2048",
-      "currencyType": "AUD",
-      "paymentMode": "Cheque",
-      "customerName": "Hemanth Danala BB",
-      "invoieStatus": "Generated (Not sent to customer)",
-      "invoiceParticulars": [
-        {
-          "particularName": "Test",
-          "particularRate": "2",
-          "particularQuantity": "1",
-          "particularDiscount": "11",
-          "particularHSN": "1",
-          "particularGST": "11",
-          "particularTotalAmount": "1120"
-        }
-      ],
-      "grandTotalAmount": 1111.12,
-      "gstNummber": "36AAPCS5625R1ZE",
-      "panNummber": "BLUPA2358A",
-      "billingNote": "Billing ntoeBilling ntoeBilling ntoeBilling ntoeBilling ntoeBilling ntoeBilling ntoeBilling ntoe",
-      "createdDate": "9/10/2024, 11:07:11 PM",
       "invoiceType": ""
     }
   ],

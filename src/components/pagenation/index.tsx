@@ -7,6 +7,8 @@ import { PDFDownloadLink, Document } from '@react-pdf/renderer';
 import Daywiseplan from '../../pages/itinerary/dayWisePlan';
 import { useNavigate } from 'react-router-dom';
 import DeleteSelectedItem from '../../Utilities/deleteSelectedItem';
+import ViewMyCustomer from '../../Utilities/ViewMyCustomer';
+import CreateNewCustomer from '../../Utilities/CreateNewCustomer';
 
 interface CustomerData {
   customerName: string;
@@ -27,12 +29,18 @@ interface DynamicPaginationProps {
 const DynamicPagination: React.FC<DynamicPaginationProps> = ({ tableData, category, isDelete }) => {
   const [data, setData] = useState<CustomerData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const recordsPerPage = 4;
+  const recordsPerPage = 2;
   const navigate = useNavigate();
 
   const [selectedJourney] = useState("invoice");
   const [selectedId, setSelectedId] = useState("" as any)
   const [changeModalshow, setChangeModalShow] = useState(false);
+
+  const [selectedCustomerJourney, setselectedCustomerJourney] = useState<string>("");
+  const [selectedCustomerId, setselectedCustomerId] = useState<string>("");
+  const [viewCustomer, setViewCustomer] = useState(false)
+  const [viewCustomerData, setViewCustomerData] = useState([] as any)
+  const [createNewCustomerModalShow, setCreateNewCustomerModalShow] = useState(false as any);
 
   useEffect(() => {
     if (tableData.length > 0) {
@@ -113,18 +121,34 @@ useEffect(() => {
     if (typeof isDelete === 'function') isDelete();
 }, [changeModalshow])
 
-const handleChangeClose = () => setChangeModalShow(false);
 
+// Inovice
+const handleChangeClose = () => setChangeModalShow(false);
 const handleDelteInvoice = (id: any) => {
     setSelectedId(id)
     setChangeModalShow(true)
 }
-
 // const MyDoc = (pdfdata: any) => (
 //     <Document>
 //         <DownloadBill billData = {pdfdata}/>
 //     </Document>
 // );
+
+// Inovice cutomer 
+const handleDeleteCustomer = (journey: any, id: any) => {
+    setChangeModalShow(true)
+    setselectedCustomerJourney(journey)
+    setselectedCustomerId(id)
+  }
+  const viewHandler = (data: any) => {
+    setViewCustomer(true)
+    setViewCustomerData(data)
+  }
+ const handleViewClose = () => setViewCustomer(false);
+
+ const handleUpdateCustomer = (id: any) => {
+    navigate(`/customer/update/${id}`)
+  }
 
   const renderTableContent = () => {
     if (category === 'itinerary') {
@@ -171,7 +195,7 @@ const handleDelteInvoice = (id: any) => {
           </tbody>
         </Table>
       );
-    }else if(category === 'customer'){
+    }else if(category === 'invoice'){
         return (<>
             <DeleteSelectedItem closeModal = {setChangeModalShow} show = {changeModalshow} onHide = {handleChangeClose} journey = {selectedJourney} id = {selectedId} />
             <Table striped bordered hover>
@@ -205,6 +229,44 @@ const handleDelteInvoice = (id: any) => {
                       <FontAwesomeIcon icon={faXmark}  className='delete_icon' onClick={() => handleDelteInvoice(item?.id)}/>
                   </td>
               </tr>)
+                ) : (
+                  <tr>
+                    <td colSpan={8}>No data available</td>
+                  </tr>
+                )}
+              </tbody>
+            </Table>
+            </>)
+    }else if(category === 'customer'){
+        return (<>
+            <ViewMyCustomer show = {viewCustomer} onHide = {handleViewClose} data = {viewCustomerData} />
+            <DeleteSelectedItem closeModal = {setChangeModalShow} show = {changeModalshow} onHide = {handleChangeClose} journey = {selectedJourney} id = {selectedId} />
+            <CreateNewCustomer closeModal = {setCreateNewCustomerModalShow} show = {createNewCustomerModalShow} onHide={() => setCreateNewCustomerModalShow(false)} />
+            <Table striped bordered hover>
+              <thead>
+                <tr>
+                    <th> # No</th>
+                    <th>Created Date</th>
+                    <th>Customer Name</th>
+                    <th>Email</th>
+                    <th>Mobile</th>
+                    <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.length > 0 ? (
+                  data?.map((item: any, index: any) =>  <tr key={index + 1}>
+                  <td>{index + 1 + (currentPage - 1) * recordsPerPage}</td>
+                  <td>{item?.createdDate}</td>
+                  <td>{item.customerFirstName} {item.customerLastName} </td>
+                  <td>{item.customerEmail}</td>
+                  <td>{item.customerMobile}</td> 
+                  <td>
+                      <FontAwesomeIcon icon={faPenToSquare} onClick = {() => handleUpdateCustomer(item.id)}/>
+                      <FontAwesomeIcon icon={faXmark} onClick = {() => handleDeleteCustomer("mycustomer",item.id)}/>
+                      <FontAwesomeIcon icon={faEye} onClick = {() => viewHandler(item)}/>
+                  </td>
+                </tr>)
                 ) : (
                   <tr>
                     <td colSpan={8}>No data available</td>

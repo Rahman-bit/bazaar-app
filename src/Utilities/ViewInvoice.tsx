@@ -46,7 +46,7 @@ const ViewInvoice = ({ data, isDelete } : any) => {
    
     <div className={`${styles.invoice_wrapper} container`}>
         
-    <DynamicPagination tableData={data} category ='customer' isDelete={isDelete} />
+    <DynamicPagination tableData={data} category ='invoice' isDelete={isDelete} />
         {/* <table>
             <thead>
                 <tr>

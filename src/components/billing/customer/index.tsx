@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from "./customer.module.css"
 import ViewMyCustomer from '../../../Utilities/ViewMyCustomer';
 import { Col, Form, Row } from 'react-bootstrap';
+import DynamicPagination from '../../pagenation';
 
 const MyCustomer = () => {
   const [data, setData] = useState([])
@@ -111,8 +112,8 @@ const MyCustomer = () => {
        
       </div>
       <div className="display_table_main_wrapper container customer_page">
-     
-        <table>
+      <DynamicPagination tableData={data} category ='customer' />
+        {/* <table>
         <thead>
             <tr>
                 <th> # No</th>
@@ -139,7 +140,7 @@ const MyCustomer = () => {
               </tr>)
             }
         </tbody>
-        </table>
+        </table> */}
           { 
             !data?.length && <NoDataFound /> 
           }
